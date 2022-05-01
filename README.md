@@ -50,11 +50,7 @@ The files include
 - 14 files for steps, intensities, and calories data on day, hour and minute bases (together with the previously mentioned duplicated files), 
 - 3 files for heartrate, sleep, and weight data
 
-*The first problem I came across during the project was in this step. Considering that the number of rows in the document in not big, I decided to use MS Excel to conduct the pre-control of the data. 
-However, as the date version of the document is in mm.dd.yyyy format as opposed to my computer settings being in dd.mm.yyyy format, 
-I could not import the data to Excel using PowerQuery on Mac without losing data
-(the Mac version of Excel doesn't have the Power Query Editor feature yet as of today -01.05.2022)
-For a quick solution, I changed the region setting for Excel through computer settings.*
+*The first problem I came across during the project was in this step. Considering that the number of rows in the document in not big, I decided to use MS Excel to conduct the pre-control of the data. However, as the date version of the document is in mm.dd.yyyy format as opposed to my computer settings being in dd.mm.yyyy format, I could not import the data to Excel using PowerQuery on Mac without losing data (the Mac version of Excel doesn't have the Power Query Editor feature yet as of today -01.05.2022) For a quick solution, I changed the region setting for Excel through computer settings.*
 
 ### 2.3. Data Limitations
 The survey is announced to have data for the dates between 12.03 and 12.05, however from the dataset includes data only for the dates between **12.04 and 12.05**
@@ -63,6 +59,7 @@ The survey is announced to have data for the dates between 12.03 and 12.05, howe
 The survey is conducted with 33 users in total, however
 - Only the activity data includes all 33 users (information on steps, intensities, and calories)
 - Sleep data includes 24 users, which 9 of them have under 10 days of input
+- Heart rate data includes 14 users
 - Weight data includes only 8 users, which 6 of them have 5 or less days of input
 
 Together with the inconsistent number of entries for different metrics, the data lacks the demographic data of the users, especially the gender information
@@ -70,9 +67,16 @@ Together with the inconsistent number of entries for different metrics, the data
 
 Finally, the dataset doesn't contain current data, the survey has been conducted in 2016.
 
-*Keeping the limitations listed above in mind, the data can still be used to get an overall idea, however for an in depth analysis, the usage of another dataset 
-that is more broad and current is advised*
+*Keeping the limitations listed above in mind, the data can still be used to get an overall idea, however for an in depth analysis, the usage of another dataset that is more broad and current is advised*
 
+## 3. Data Processing
+I have used R for analysing the data with RStudio Desktop.
+
+The R code I've used is included in the repository and can be reached through the link below:
+
+
+
+### 3.1. Data Cleaning
 
 
 
