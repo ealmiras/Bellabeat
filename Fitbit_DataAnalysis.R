@@ -58,22 +58,20 @@ daily_sleep <- daily_sleep %>% distinct()
 
 # Cleaning column names and matching all date-column names for the next steps
 daily_activity <- daily_activity %>% 
-  clean_names() %>% 
-  rename(date = activity_date)
+  clean_names() %>% rename(date = activity_date)
 daily_sleep <- daily_sleep %>% 
-  clean_names() %>% 
-  rename(date = sleep_day)
+  clean_names() %>% rename(date = sleep_day)
 hourly_calories <- hourly_calories %>% 
-  clean_names() %>% 
-  rename(date = activity_hour)
+  clean_names() %>% rename(date = activity_hour)
 hourly_intensities <- hourly_intensities %>% 
-  clean_names() %>% 
-  rename(date = activity_hour)
+  clean_names() %>% rename(date = activity_hour)
 hourly_steps <- hourly_steps %>% 
-  clean_names() %>% 
-  rename(date = activity_hour)
+  clean_names() %>% rename(date = activity_hour)
 weight_log <- weight_log %>% 
   clean_names()
+
+
+
 
 
 
