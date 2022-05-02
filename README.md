@@ -11,4 +11,4 @@ You can find the sections of the project below together with the R code used:
 
 ----
 
-[Fitbase_Data.R](Fitbase_Data.R)
+[Fitbit_Data.R](Fitbit_Data.R)
