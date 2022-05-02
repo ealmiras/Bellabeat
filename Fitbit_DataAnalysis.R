@@ -47,27 +47,33 @@ hourly_steps %>% filter(StepTotal == 0) # 9287 entries among 22.098 have Total S
 hourly_steps <- hourly_steps %>% filter(StepTotal != 0)
 
 # Controlling and removing duplicates and N/A values for the key metrics
-sum(duplicated(daily_activity)) #0
-sum(is.na(daily_activity$TotalSteps)) #0
+c(sum(duplicated(daily_activity)), sum(is.na(daily_activity$TotalSteps))) #0-0
+c(sum(duplicated(daily_sleep)), sum(is.na(daily_sleep$TotalMinutesAsleep))) #3-0
+c(sum(duplicated(hourly_calories)), sum(is.na(hourly_calories$Calories))) #0-0
+c(sum(duplicated(hourly_intensities)), sum(is.na(hourly_intensities$TotalIntensity))) #0-0
+c(sum(duplicated(hourly_steps)), sum(is.na(hourly_steps$StepTotal))) #0-0
+c(sum(duplicated(weight_log)), sum(is.na(weight_log$WeightKg))) #0-0
 
-sum(duplicated(daily_sleep)) #3
-sum(is.na(daily_sleep$TotalMinutesAsleep)) #0
 daily_sleep <- daily_sleep %>% distinct()
 
-sum(duplicated(hourly_calories)) #0
-sum(is.na(hourly_calories$Calories)) #0
-
-sum(duplicated(hourly_intensities)) #0
-sum(is.na(hourly_intensities$TotalIntensity)) #0
-
-sum(duplicated(hourly_steps)) #0
-sum(is.na(hourly_steps$StepTotal)) #0
-
-sum(duplicated(weight_log)) #0
-sum(is.na(weight_log$WeightKg)) #0
-
-
-
-
+# Cleaning column names and matching all date-column names for the next steps
+daily_activity <- daily_activity %>% 
+  clean_names() %>% 
+  rename(date = activity_date)
+daily_sleep <- daily_sleep %>% 
+  clean_names() %>% 
+  rename(date = sleep_day)
+hourly_calories <- hourly_calories %>% 
+  clean_names() %>% 
+  rename(date = activity_hour)
+hourly_intensities <- hourly_intensities %>% 
+  clean_names() %>% 
+  rename(date = activity_hour)
+hourly_steps <- hourly_steps %>% 
+  clean_names() %>% 
+  rename(date = activity_hour)
+weight_log <- weight_log %>% 
+  clean_names()
+  
 
 
