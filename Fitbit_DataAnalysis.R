@@ -74,6 +74,6 @@ hourly_steps <- hourly_steps %>%
   rename(date = activity_hour)
 weight_log <- weight_log %>% 
   clean_names()
-  
+
 
 
