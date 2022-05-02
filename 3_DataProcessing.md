@@ -1,9 +1,16 @@
 ## 3. Data Processing
-I have used R for analysing the data with RStudio Desktop.
+I've used R for analysing the data with RStudio Desktop. You can reach my R code in the directory, also by clicking [here](Fitbit_Data.R)!
 
-The R code I've used is included in the repository and can be reached via the link below:
+I decided to use daily activity, sleep, and weight_log data & hourly calories, intensities, and steps datasets in my analysis.
 
-[Fitbase_Data.R](Fitbase_Data.R)
+```
+daily_activity <- read_csv(".../dailyActivity_merged.csv")
+hourly_calories <- read_csv(".../hourlyCalories_merged.csv")
+hourly_intensities <- read_csv(".../hourlyIntensities_merged.csv")
+hourly_steps <- read_csv(".../hourlySteps_merged.csv")
+daily_sleep <- read_csv(".../sleepDay_merged.csv")
+weight_log <- read_csv(".../weightLogInfo_merged.csv")
+```
 
 ### 3.1. Data Cleaning
 As a first step, I checked the datasets with the **head()** function and realised that the date columns are shown as **char**
@@ -45,27 +52,26 @@ hourly_steps <- hourly_steps %>% filter(StepTotal != 0)
 Then, I checked for the duplicates and N/A values for the key parameters in the dataset and removed **3** duplicates from the **daily_sleep** table
 
 ```
-sum(duplicated(daily_activity)) #0
-sum(is.na(daily_activity$TotalSteps)) #0
+c(sum(duplicated(daily_activity)), sum(is.na(daily_activity$TotalSteps))) #0-0
+c(sum(duplicated(daily_sleep)), sum(is.na(daily_sleep$TotalMinutesAsleep))) #3-0
+c(sum(duplicated(hourly_calories)), sum(is.na(hourly_calories$Calories))) #0-0
+c(sum(duplicated(hourly_intensities)), sum(is.na(hourly_intensities$TotalIntensity))) #0-0
+c(sum(duplicated(hourly_steps)), sum(is.na(hourly_steps$StepTotal))) #0-0
+c(sum(duplicated(weight_log)), sum(is.na(weight_log$WeightKg))) #0-0
 
-sum(duplicated(daily_sleep)) #3
-sum(is.na(daily_sleep$TotalMinutesAsleep)) #0
 daily_sleep <- daily_sleep %>% distinct()
-
-sum(duplicated(hourly_calories)) #0
-sum(is.na(hourly_calories$Calories)) #0
-
-sum(duplicated(hourly_intensities)) #0
-sum(is.na(hourly_intensities$TotalIntensity)) #0
-
-sum(duplicated(hourly_steps)) #0
-sum(is.na(hourly_steps$StepTotal)) #0
-
-sum(duplicated(weight_log)) #0
-sum(is.na(weight_log$WeightKg)) #0
 ```
 
+To make analysis easier, I cleaned the column names and at the same gave date columns a common name to make it easier to join them in the next stages.
 
+```
+daily_activity <- daily_activity %>% clean_names() %>% rename(date = activity_date)
+daily_sleep <- daily_sleep %>% clean_names() %>% rename(date = sleep_day)
+hourly_calories <- hourly_calories %>% clean_names() %>% rename(date = activity_hour)
+hourly_intensities <- hourly_intensities %>% clean_names() %>% rename(date = activity_hour)
+hourly_steps <- hourly_steps %>% clean_names() %>% rename(date = activity_hour)
+weight_log <- weight_log %>% clean_names()
+```
 
 
 
