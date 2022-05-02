@@ -1,6 +1,3 @@
-# Bellabeat Case Study
-*This project is conducted as a capstone project for the Google Data Analytics Professional Certificate Program*
-
 ## 1. Summary
 
 ### 1.1. About Bellabeat
