@@ -5,7 +5,6 @@ library(janitor)
 
 # Loading the data --------------------------------------------------------
 daily_activity <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Data/dailyActivity_merged.csv")
-heart_rate <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Data/heartrate_seconds_merged.csv")
 hourly_calories <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Data/hourlyCalories_merged.csv")
 hourly_intensities <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Data/hourlyIntensities_merged.csv")
 hourly_steps <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Data/hourlySteps_merged.csv")
@@ -14,7 +13,6 @@ weight_log <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Dat
 
 # Number of unique users
 n_distinct(daily_activity$Id) #33
-n_distinct(heart_rate$Id) #14
 n_distinct(hourly_calories$Id) #33
 n_distinct(hourly_intensities$Id) #33
 n_distinct(hourly_steps$Id) #33
@@ -23,7 +21,6 @@ n_distinct(weight_log$Id) #8
 
 # Data cleaning -----------------------------------------------------------
 head(daily_activity) #date - char
-head(heart_rate) #datetime - char
 head(hourly_calories) #datetime - char
 head(hourly_intensities) #datetime - char
 head(hourly_steps) #datetime - char
@@ -31,8 +28,8 @@ head(daily_sleep) #datetime - char
 head(weight_log) #datetime - char
 
 # Correction of date formats
-daily_activity$ActivityDate <- as.Date(daily_activity$ActivityDate, format ="%m/%d/%Y")
-heart_rate$Time <- strptime (heart_rate$Time, format = "%m/%d/%Y %I:%M:%S %p")
+daily_activity <- daily_activity
+daily_activity$ActivityDate <- as.Date(daily_activit$ActivityDate, format ="%m/%d/%Y")
 hourly_calories$ActivityHour <- strptime (hourly_calories$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
 hourly_intensities$ActivityHour <- strptime (hourly_intensities$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
 hourly_steps$ActivityHour <- strptime (hourly_steps$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
@@ -48,4 +45,29 @@ hourly_intensities <- hourly_intensities %>% filter(TotalIntensity != 0)
 
 hourly_steps %>% filter(StepTotal == 0) # 9287 entries among 22.098 have Total Step value of 0
 hourly_steps <- hourly_steps %>% filter(StepTotal != 0)
+
+# Controlling and removing duplicates and N/A values for the key metrics
+sum(duplicated(daily_activity)) #0
+sum(is.na(daily_activity$TotalSteps)) #0
+
+sum(duplicated(daily_sleep)) #3
+sum(is.na(daily_sleep$TotalMinutesAsleep)) #0
+daily_sleep <- daily_sleep %>% distinct()
+
+sum(duplicated(hourly_calories)) #0
+sum(is.na(hourly_calories$Calories)) #0
+
+sum(duplicated(hourly_intensities)) #0
+sum(is.na(hourly_intensities$TotalIntensity)) #0
+
+sum(duplicated(hourly_steps)) #0
+sum(is.na(hourly_steps$StepTotal)) #0
+
+sum(duplicated(weight_log)) #0
+sum(is.na(weight_log$WeightKg)) #0
+
+
+
+
+
 
