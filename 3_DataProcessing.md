@@ -6,11 +6,10 @@ The R code I've used is included in the repository and can be reached via the li
 [Fitbase_Data.R](Fitbase_Data.R)
 
 ### 3.1. Data Cleaning
-As a first step, I checked the datasets uploaded with the **head()** function and realised that the date columns are shown as **char**
+As a first step, I checked the datasets with the **head()** function and realised that the date columns are shown as **char**
 
 ```
 head(daily_activity) #date - char
-head(heart_rate) #datetime - char
 head(hourly_calories) #datetime - char
 head(hourly_intensities) #datetime - char
 head(hourly_steps) #datetime - char
@@ -23,7 +22,6 @@ Also, for the weight data I used only the date format as the time information is
 
 ```
 daily_activity$ActivityDate <- as.Date(daily_activity$ActivityDate, format ="%m/%d/%Y")
-heart_rate$Time <- strptime (heart_rate$Time, format = "%m/%d/%Y %I:%M:%S %p")
 hourly_calories$ActivityHour <- strptime (hourly_calories$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
 hourly_intensities$ActivityHour <- strptime (hourly_intensities$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
 hourly_steps$ActivityHour <- strptime (hourly_steps$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
@@ -44,7 +42,28 @@ hourly_steps %>% filter(StepTotal == 0) # 9287 entries among 22.098 have Total S
 hourly_steps <- hourly_steps %>% filter(StepTotal != 0)
 ```
 
+Then, I checked for the duplicates and N/A values for the key parameters in the dataset and removed **3** duplicates from the **daily_sleep** table
 
+```
+sum(duplicated(daily_activity)) #0
+sum(is.na(daily_activity$TotalSteps)) #0
+
+sum(duplicated(daily_sleep)) #3
+sum(is.na(daily_sleep$TotalMinutesAsleep)) #0
+daily_sleep <- daily_sleep %>% distinct()
+
+sum(duplicated(hourly_calories)) #0
+sum(is.na(hourly_calories$Calories)) #0
+
+sum(duplicated(hourly_intensities)) #0
+sum(is.na(hourly_intensities$TotalIntensity)) #0
+
+sum(duplicated(hourly_steps)) #0
+sum(is.na(hourly_steps$StepTotal)) #0
+
+sum(duplicated(weight_log)) #0
+sum(is.na(weight_log$WeightKg)) #0
+```
 
 
 
