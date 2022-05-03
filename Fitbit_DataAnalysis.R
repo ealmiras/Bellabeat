@@ -83,7 +83,11 @@ hourly_activity <- hourly_calories %>%
   full_join(hourly_steps, by = c("id", "date")) %>% 
   mutate(day_week = weekdays(date))
 
+weight_log <- weight_log %>% 
+  mutate(day_week = weekdays(date))
 
+daily_activity <- daily_activity %>% 
+  mutate(day_week = weekdays((date)))
 
 
 
