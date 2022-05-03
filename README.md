@@ -1,5 +1,5 @@
 # Bellabeat Case Study
-*This project is conducted as a capstone project for the Google Data Analytics Professional Certificate Program*
+This project is conducted as a capstone project for the Google Data Analytics Professional Certificate Program
 
 You can find the sections of the project below together with the R code used:
 
@@ -11,4 +11,4 @@ You can find the sections of the project below together with the R code used:
 
 ----
 
-[Fitbit_Data.R](Fitbit_Data.R)
+[Fitbit_DataAnalysis.R](Fitbit_DataAnalysis.R)
