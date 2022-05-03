@@ -73,14 +73,29 @@ hourly_steps <- hourly_steps %>% clean_names() %>% rename(date = activity_hour)
 weight_log <- weight_log %>% clean_names()
 ```
 
+## 3.2. Joining Tables
+To be able to cross analyse the data, I merged some tables:
+- Daily activity table and sleep table
+- Hourly activity tables
+While joining the tables, I also added weekday information to the both tables.
+I added the weekday information also to the weight table and daily activity table.
 
+```
+sleep_activity <- daily_sleep %>% 
+  left_join(daily_activity, by = c("id", "date")) %>% mutate(day_week = weekdays(date))
+sum(is.na(sleep_activity$total_steps)) #checking if any entry from the sleep data is mising step information - 0 
 
+hourly_activity <- hourly_calories %>% 
+  full_join(hourly_intensities, by = c("id", "date")) %>% full_join(hourly_steps, by = c("id", "date")) %>% mutate(day_week = weekdays(date))
+  
+weight_log <- weight_log %>% 
+  mutate(day_week = weekdays(date))
 
+daily_activity <- daily_activity %>% 
+  mutate(day_week = weekdays((date)))
+```
 
-
-
-
-
-
-
-
+At the end of the preparation phase, I had 3 main tables to use in my analysis.
+- Daily Activity
+- Hourly Activity
+- Sleep Activity
