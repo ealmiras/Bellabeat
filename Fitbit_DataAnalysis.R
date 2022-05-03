@@ -2,6 +2,7 @@ install.packages("tidyverse")
 install.packages("janitor")
 library(tidyverse)
 library(janitor)
+library(lubridate)
 
 # Loading the data --------------------------------------------------------
 daily_activity <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Data/dailyActivity_merged.csv")
@@ -29,7 +30,7 @@ head(weight_log) #datetime - char
 
 # Correction of date formats
 daily_activity <- daily_activity
-daily_activity$ActivityDate <- as.Date(daily_activit$ActivityDate, format ="%m/%d/%Y")
+daily_activity$ActivityDate <- as.Date(daily_activity$ActivityDate, format ="%m/%d/%Y")
 hourly_calories$ActivityHour <- strptime (hourly_calories$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
 hourly_intensities$ActivityHour <- strptime (hourly_intensities$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
 hourly_steps$ActivityHour <- strptime (hourly_steps$ActivityHour, format = "%m/%d/%Y %I:%M:%S %p")
@@ -69,6 +70,19 @@ hourly_steps <- hourly_steps %>%
   clean_names() %>% rename(date = activity_hour)
 weight_log <- weight_log %>% 
   clean_names()
+
+# Joining the tables ------------------------------------------------------
+
+sleep_activity <- daily_sleep %>% 
+  left_join(daily_activity, by = c("id", "date")) %>% 
+  mutate(day_week = weekdays(date))
+sum(is.na(sleep_activity$total_steps))
+
+hourly_activity <- hourly_calories %>% 
+  full_join(hourly_intensities, by = c("id", "date")) %>% 
+  full_join(hourly_steps, by = c("id", "date")) %>% 
+  mutate(day_week = weekdays(date))
+
 
 
 
