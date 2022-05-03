@@ -71,8 +71,7 @@ hourly_steps <- hourly_steps %>%
 weight_log <- weight_log %>% 
   clean_names()
 
-# Joining the tables ------------------------------------------------------
-
+# Joining the tables 
 sleep_activity <- daily_sleep %>% 
   left_join(daily_activity, by = c("id", "date")) %>% 
   mutate(day_week = weekdays(date))
@@ -84,12 +83,70 @@ hourly_activity <- hourly_calories %>%
   mutate(day_week = weekdays(date))
 
 weight_log <- weight_log %>% 
-  mutate(day_week = weekdays(date))
+  mutate(day_week = weekdays(date)) %>% 
+  mutate(day_month = as.numeric(format(date, format = "%d")))
 
 daily_activity <- daily_activity %>% 
   mutate(day_week = weekdays((date)))
 
 
+# Data Analysis -----------------------------------------------------------
+# User engagement of activity tracker
+d_act_tracker_usage <- daily_activity %>% 
+  group_by(id) %>% 
+  summarise(n = n()) %>% 
+  arrange(by = n)
 
+ggplot(d_act_tracker_usage) + 
+  aes(x=n) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = median(d_act_tracker_usage$n), color="#D8315B") +
+  geom_vline(xintercept = mean(d_act_tracker_usage$n), color="#DF9B6D") +
+  geom_label(aes(x=median(n)-3, y=15, label = "median"), color="#D8315B") +
+  geom_label(aes(x=median(n)-2, y=14, label = median(n)), color="#D8315B") +
+  geom_label(aes(x=mean(n)-2.5, y=10, label = "mean"), color="#DF9B6D") +
+  geom_label(aes(x=mean(n)-2, y=9, label = round(mean(n))), color="#DF9B6D") +
+  labs(title = "Activity Tracker Usage by User", x = "# of days", y = "# of Users")
 
+# User engagement of sleep tracker
+d_sleep_tracker_usage <- sleep_activity %>% 
+  group_by(id) %>% 
+  summarise(n = n()) %>% 
+  arrange(by = n)
+
+ggplot(d_sleep_tracker_usage) + 
+  aes(x=n) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = median(d_sleep_tracker_usage$n), color="#0A2463") +
+  geom_vline(xintercept = mean(d_sleep_tracker_usage$n), color="#8D99AE") +
+  geom_label(aes(x=median(n)-3, y=2.9, label = "median"), color="#0A2463") +
+  geom_label(aes(x=median(n)-2.4, y=2.7, label = median(n)), color="#0A2463") +
+  geom_label(aes(x=mean(n)-2.5, y=2.4, label = "mean"), color="#8D99AE") +
+  geom_label(aes(x=mean(n)-2, y=2.2, label = round(mean(n))), color="#8D99AE") +
+  labs(title = "Sleep Tracker Usage by User", x = "# of days", y = "# of Users")
+
+# User engagement of weight tracker
+d_weight_tracker_usage <- weight_log %>% 
+  group_by(id) %>% 
+  summarise(n = n()) %>% 
+  arrange(by = n)
+
+ggplot(d_weight_tracker_usage) + 
+  aes(x=n) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = median(d_weight_tracker_usage$n), color="#818AA3") +
+  geom_vline(xintercept = mean(d_weight_tracker_usage$n), color="#A491D3") +
+  geom_label(aes(x=median(n)+3, y=2.9, label = "median"), color="#818AA3") +
+  geom_label(aes(x=median(n)+2.4, y=2.7, label = median(n)), color="#818AA3") +
+  geom_label(aes(x=mean(n)+2.5, y=2.4, label = "mean"), color="#A491D3") +
+  geom_label(aes(x=mean(n)+2, y=2.2, label = round(mean(n))), color="#A491D3") +
+  labs(title = "Weight Tracker Usage by User", x = "# of days", y = "# of Users")
+
+m_weight_tracker_usage <- weight_log %>% 
+  group_by(date) %>% 
+  summarise(n=n())
+
+ggplot(m_weight_tracker_usage) +
+  aes(x=date, y=n) +
+  geom_line()
 
