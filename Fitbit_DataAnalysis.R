@@ -148,5 +148,6 @@ m_weight_tracker_usage <- weight_log %>%
 
 ggplot(m_weight_tracker_usage) +
   aes(x=date, y=n) +
-  geom_line()
+  geom_line() +
+  labs(title = "Weight Tracker Usage by Date", x = "Date", y = "# of Users")
 
