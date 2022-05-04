@@ -105,7 +105,10 @@ ggplot(d_act_tracker_usage) +
   geom_label(aes(x=median(n)-2, y=14, label = median(n)), color="#D8315B") +
   geom_label(aes(x=mean(n)-2.5, y=10, label = "mean"), color="#DF9B6D") +
   geom_label(aes(x=mean(n)-2, y=9, label = round(mean(n))), color="#DF9B6D") +
-  labs(title = "Activity Tracker Usage by User", x = "# of days", y = "# of Users")
+  labs(title = "Activity Tracker Usage by User", 
+       x = "# of days", y = "# of Users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+ggsave("Plot_ActivityTrackerUsage.png", width = 5, height = 4)
 
 # User engagement of sleep tracker
 d_sleep_tracker_usage <- sleep_activity %>% 
@@ -116,13 +119,16 @@ d_sleep_tracker_usage <- sleep_activity %>%
 ggplot(d_sleep_tracker_usage) + 
   aes(x=n) +
   geom_histogram(binwidth = 1) +
-  geom_vline(xintercept = median(d_sleep_tracker_usage$n), color="#0A2463") +
-  geom_vline(xintercept = mean(d_sleep_tracker_usage$n), color="#8D99AE") +
-  geom_label(aes(x=median(n)-3, y=2.9, label = "median"), color="#0A2463") +
-  geom_label(aes(x=median(n)-2.4, y=2.7, label = median(n)), color="#0A2463") +
-  geom_label(aes(x=mean(n)-2.5, y=2.4, label = "mean"), color="#8D99AE") +
-  geom_label(aes(x=mean(n)-2, y=2.2, label = round(mean(n))), color="#8D99AE") +
-  labs(title = "Sleep Tracker Usage by User", x = "# of days", y = "# of Users")
+  geom_vline(xintercept = median(d_sleep_tracker_usage$n), color="#D8315B") +
+  geom_vline(xintercept = mean(d_sleep_tracker_usage$n), color="#DF9B6D") +
+  geom_label(aes(x=median(n)-3, y=2.9, label = "median"), color="#D8315B") +
+  geom_label(aes(x=median(n)-2.4, y=2.7, label = median(n)), color="#D8315B") +
+  geom_label(aes(x=mean(n)-2.5, y=2.4, label = "mean"), color="#DF9B6D") +
+  geom_label(aes(x=mean(n)-2, y=2.2, label = round(mean(n))), color="#DF9B6D") +
+  labs(title = "Sleep Tracker Usage by User", 
+       x = "# of days", y = "# of Users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+ggsave("Plot_SleepTrackerUsage.png", width = 5, height = 4)
 
 # User engagement of weight tracker
 d_weight_tracker_usage <- weight_log %>% 
@@ -130,16 +136,16 @@ d_weight_tracker_usage <- weight_log %>%
   summarise(n = n()) %>% 
   arrange(by = n)
 
-ggplot(d_weight_tracker_usage) + 
-  aes(x=n) +
-  geom_histogram(binwidth = 1) +
-  geom_vline(xintercept = median(d_weight_tracker_usage$n), color="#818AA3") +
-  geom_vline(xintercept = mean(d_weight_tracker_usage$n), color="#A491D3") +
-  geom_label(aes(x=median(n)+3, y=2.9, label = "median"), color="#818AA3") +
-  geom_label(aes(x=median(n)+2.4, y=2.7, label = median(n)), color="#818AA3") +
-  geom_label(aes(x=mean(n)+2.5, y=2.4, label = "mean"), color="#A491D3") +
-  geom_label(aes(x=mean(n)+2, y=2.2, label = round(mean(n))), color="#A491D3") +
-  labs(title = "Weight Tracker Usage by User", x = "# of days", y = "# of Users")
+# ggplot(d_weight_tracker_usage) + 
+#   aes(x=n) +
+#   geom_histogram(binwidth = 1) +
+#   geom_vline(xintercept = median(d_weight_tracker_usage$n), color="#818AA3") +
+#   geom_vline(xintercept = mean(d_weight_tracker_usage$n), color="#A491D3") +
+#   geom_label(aes(x=median(n)+3, y=2.9, label = "median"), color="#818AA3") +
+#   geom_label(aes(x=median(n)+2.4, y=2.7, label = median(n)), color="#818AA3") +
+#   geom_label(aes(x=mean(n)+2.5, y=2.4, label = "mean"), color="#A491D3") +
+#   geom_label(aes(x=mean(n)+2, y=2.2, label = round(mean(n))), color="#A491D3") +
+#   labs(title = "Weight Tracker Usage by User", x = "# of days", y = "# of Users")
 
 m_weight_tracker_usage <- weight_log %>% 
   group_by(day_month) %>% 
@@ -148,7 +154,9 @@ ggplot(m_weight_tracker_usage) +
   aes(x=day_month, y=n) +
   geom_col() +
   labs(title = "Weight Tracker Usage by Day_Month", 
-       x = "Day", y = "# of Users")
+       x = "Day", y = "# of Users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+ggsave("Plot_WeightTrackerUsage_byDayMonth.png", width = 5, height = 4)
 
 w_weight_tracker_usage <- weight_log %>% 
   group_by(day_week) %>% 
@@ -159,4 +167,36 @@ ggplot(w_weight_tracker_usage) +
   geom_col() +
   labs(title = "Weight Tracker Usage by Day_Week", 
        subtitle = "1:Monday - 7:Sunday",
-       x = "Day", y = "# of Users")
+       x = "Day", y = "# of Users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+ggsave("Plot_WeightTrackerUsage_byDayWeek.png", width = 5, height = 4)
+
+# Cross function usage
+joined_table <- daily_activity %>% 
+  select(id, date, total_steps, calories) %>% 
+  full_join(daily_sleep %>% select(id, date, total_minutes_asleep), by = c("id", "date")) %>% 
+  full_join(weight_log %>% select(id, date, weight_kg), by = c("id", "date"))
+n_distinct(joined_table$id)
+
+joined_table %>% filter(is.na(joined_table$total_steps)) #all users used activity tracker
+
+joined_by_user <- joined_table %>% 
+  replace(is.na(joined_table), 0) %>% 
+  group_by(id) %>% 
+  summarise(sum_steps = sum(total_steps),
+            sum_sleep = sum(total_minutes_asleep),
+            max_weight = max(weight_kg)) # so that we can know that user has recorded weight at least once
+
+all_function_user <- joined_by_user %>% 
+  filter(sum_sleep > 0, max_weight > 0)
+all_function_user %>% summarise(n())
+# 6 users used all functions at least once
+
+activity_sleep_user <- joined_by_user %>% 
+  filter(sum_sleep > 0, max_weight == 0)
+activity_sleep_user %>% summarise(n())
+# 18 users used activity and sleep trackers at least once, but never the weight log
+
+
+
+
