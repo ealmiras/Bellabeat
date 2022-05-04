@@ -74,21 +74,20 @@ weight_log <- weight_log %>%
 # Joining the tables 
 sleep_activity <- daily_sleep %>% 
   left_join(daily_activity, by = c("id", "date")) %>% 
-  mutate(day_week = weekdays(date))
+  mutate(day_week = wday(ymd(date), week_start = 1))
 sum(is.na(sleep_activity$total_steps))
 
 hourly_activity <- hourly_calories %>% 
   full_join(hourly_intensities, by = c("id", "date")) %>% 
   full_join(hourly_steps, by = c("id", "date")) %>% 
-  mutate(day_week = weekdays(date))
+  mutate(day_week = wday(ymd_hms(date), week_start = 1))
 
 weight_log <- weight_log %>% 
-  mutate(day_week = weekdays(date)) %>% 
+  mutate(day_week = wday(ymd(date), week_start = 1)) %>% 
   mutate(day_month = as.numeric(format(date, format = "%d")))
 
 daily_activity <- daily_activity %>% 
-  mutate(day_week = weekdays((date)))
-
+  mutate(day_week = wday(ymd(date), week_start = 1))
 
 # Data Analysis -----------------------------------------------------------
 # User engagement of activity tracker
@@ -143,11 +142,21 @@ ggplot(d_weight_tracker_usage) +
   labs(title = "Weight Tracker Usage by User", x = "# of days", y = "# of Users")
 
 m_weight_tracker_usage <- weight_log %>% 
-  group_by(date) %>% 
+  group_by(day_month) %>% 
   summarise(n=n())
-
 ggplot(m_weight_tracker_usage) +
-  aes(x=date, y=n) +
-  geom_line() +
-  labs(title = "Weight Tracker Usage by Date", x = "Date", y = "# of Users")
+  aes(x=day_month, y=n) +
+  geom_col() +
+  labs(title = "Weight Tracker Usage by Day_Month", 
+       x = "Day", y = "# of Users")
 
+w_weight_tracker_usage <- weight_log %>% 
+  group_by(day_week) %>% 
+  summarise(n = n()) %>% 
+  arrange(day_week)
+ggplot(w_weight_tracker_usage) + 
+  aes(x=day_week, y=n) + 
+  geom_col() +
+  labs(title = "Weight Tracker Usage by Day_Week", 
+       subtitle = "1:Monday - 7:Sunday",
+       x = "Day", y = "# of Users")
