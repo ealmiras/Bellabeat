@@ -9,6 +9,8 @@ You can find the sections of the project below together with the R code used:
 
 [3_DataProcessing](3_DataProcessing.md)
 
+[4_DataAnalysis.md](4_DataAnalysis.md)
+
 ----
 
 [Fitbit_DataAnalysis.R](Fitbit_DataAnalysis.R)
