@@ -7,8 +7,8 @@ I used histogram charts to and median values.
 We can see that there's a high level user engagement for the Activity and Sleep trackers.
 Especially for the activity tracker, the median of the usage is 30 days out of 31 days in total for the period.
 
-![](https://github.com/ealmiras/Bellabeat/blob/main/Plot_ActivityTrackerUsage.png)
-![](https://github.com/ealmiras/Bellabeat/blob/main/Plot_SleepTrackerUsage.png)
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_ActivityTrackerUsage.png" width="450" /> |
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_SleepTrackerUsage.png" width="450" />
 
 For the weight tracker data, as there are a pretty limited number of users, statistical analysis would mislead.
 Due to the nature of the data, it is expected that the users log their data less frequently, probable that less frequent than once a month.
@@ -18,6 +18,10 @@ However, for the sake of curiosity, I checked the data to see if there's any pat
 As we have the data of only one month, it's hard to see a pattern.
 For the weekly data, we can say that it's more probable of the users to log their weight data in the first half of the week, and the least probable on Friday and Saturdays.
 
-![](https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayMonth.png)
-![](https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayWeek.png)
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayMonth.png" width="450" /> |
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayWeek.png" width="450" />
+
+### 3.2. Cross Function Usage
+Next, I wanted to check the distribution of the user who use more than one function of the app.
+
 
