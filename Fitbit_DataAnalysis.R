@@ -3,6 +3,7 @@ install.packages("janitor")
 library(tidyverse)
 library(janitor)
 library(lubridate)
+library(scales)
 
 # Loading the data --------------------------------------------------------
 daily_activity <- read_csv("/Users/asozlu/Desktop/Google Data Analytics/Fitabase_Data/dailyActivity_merged.csv")
@@ -203,7 +204,18 @@ act_count <- only_activity_user %>% summarise(n())
 # 7 users used only activity tracker
 
 df <- all_count %>% full_join(act_slp_count) %>% full_join(act_count) %>% 
-  mutate(type = c("all","act_slp","act"))
+  mutate(type = c("all functions","activity & sleep","only activity")) %>% 
+  rename(count = `n()`) %>% 
+  mutate(percentage = percent(count/sum(count), accuracy = 1)) %>% 
+  arrange(desc(type)) 
 
-
-
+ggplot(df) + 
+  aes(x="", y= count, fill=type) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void() +
+  geom_text(aes(y = count/2 + c(0, cumsum(count)[-length(count)]), 
+                label = percentage), size=6, color="white") +
+  labs(title ="Percentage of Users - Cross Function Usage",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+ggsave("Plot_PercentageUsersCrossFunction.png", width = 5, height = 4)
