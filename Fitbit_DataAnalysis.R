@@ -188,6 +188,11 @@ joined_by_user <- joined_table %>%
             sum_sleep = sum(total_minutes_asleep),
             max_weight = max(weight_kg)) # so that we can know that user has recorded weight at least once
 
+joined_by_user %>% 
+  filter(sum_steps > 0) %>% 
+  summarise(n())
+# all 33 users have used the activity tracker
+
 all_function_user <- joined_by_user %>% 
   filter(sum_sleep > 0, max_weight > 0)
 all_count <- all_function_user %>% summarise(n())
@@ -198,16 +203,25 @@ activity_sleep_user <- joined_by_user %>%
 act_slp_count <- activity_sleep_user %>% summarise(n())
 # 18 users used activity and sleep trackers at least once, but never used the weight log
 
+activity_weight_user <- joined_by_user %>% 
+  filter(sum_sleep == 0, max_weight > 0)
+act_wth_count <- activity_weight_user %>% summarise(n())
+# 2 users used activity and sleep trackers at least once, but never used the weight log
+
 only_activity_user <- joined_by_user %>% 
   filter(sum_sleep == 0, max_weight == 0)
 act_count <- only_activity_user %>% summarise(n())
 # 7 users used only activity tracker
 
-df <- all_count %>% full_join(act_slp_count) %>% full_join(act_count) %>% 
-  mutate(type = c("all functions","activity & sleep","only activity")) %>% 
+df <- all_count %>% full_join(act_slp_count) %>% full_join(act_wth_count) %>% full_join(act_count) %>%
+  mutate(type = c("all functions","activity & sleep", "activity & weight","only activity")) %>% 
   rename(count = `n()`) %>% 
   mutate(percentage = percent(count/sum(count), accuracy = 1)) %>% 
-  arrange(desc(type)) 
+  arrange(desc(type))
+
+tibble(df) %>% 
+  select(type, count, percentage) %>% 
+  arrange(desc(count))
 
 ggplot(df) + 
   aes(x="", y= count, fill=type) +
@@ -219,3 +233,7 @@ ggplot(df) +
   labs(title ="Percentage of Users - Cross Function Usage",
        caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
 ggsave("Plot_PercentageUsersCrossFunction.png", width = 5, height = 4)
+
+# Segmentation
+
+
