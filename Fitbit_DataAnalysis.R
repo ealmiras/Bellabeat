@@ -189,14 +189,21 @@ joined_by_user <- joined_table %>%
 
 all_function_user <- joined_by_user %>% 
   filter(sum_sleep > 0, max_weight > 0)
-all_function_user %>% summarise(n())
+all_count <- all_function_user %>% summarise(n())
 # 6 users used all functions at least once
 
 activity_sleep_user <- joined_by_user %>% 
   filter(sum_sleep > 0, max_weight == 0)
-activity_sleep_user %>% summarise(n())
-# 18 users used activity and sleep trackers at least once, but never the weight log
+act_slp_count <- activity_sleep_user %>% summarise(n())
+# 18 users used activity and sleep trackers at least once, but never used the weight log
 
+only_activity_user <- joined_by_user %>% 
+  filter(sum_sleep == 0, max_weight == 0)
+act_count <- only_activity_user %>% summarise(n())
+# 7 users used only activity tracker
+
+df <- all_count %>% full_join(act_slp_count) %>% full_join(act_count) %>% 
+  mutate(type = c("all","act_slp","act"))
 
 
 
