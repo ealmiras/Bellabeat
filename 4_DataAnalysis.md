@@ -24,4 +24,11 @@ For the weekly data, we can say that it's more probable of the users to log thei
 ### 3.2. Cross Function Usage
 Next, I wanted to check the distribution of the user who use more than one function of the app.
 
+Firstly, it's important to mention that, all 33 users analysed have used activity tracker.
+- 7 of those have used only the activity tracker
+- 18 have used the sleep tracker together with the activity tracker
+- 2 have used weight log together with the activity tracker
+- 6 have used all functions analysed (activity, sleep, weight log)
+
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_PercentageUsersCrossFunction.png" width="450" />
 
