@@ -244,9 +244,9 @@ segmentation_user <- joined_table %>%
     day_weight = sum(!is.na(weight_kg))
             ) %>% 
     mutate(segmentation_user, segment = 
-         ifelse(day_steps == 31 & day_sleep > median(day_sleep) & day_weight > 0, "1. Golden user",
-                ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2. Silver user",
-                       ifelse(day_steps > mean(day_steps), "3. Bronz user", "4. Other"))))
+         ifelse(day_steps == 31 & day_sleep > median(day_sleep) & day_weight > 0, "1",
+                ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2",
+                       ifelse(day_steps > mean(day_steps), "3", "4"))))
 
 segmentation_numbers <- tibble(segmentation_user) %>% 
   group_by(segment) %>% 
@@ -269,9 +269,9 @@ segmentation_user_2 <- joined_table %>%
     day_sleep = sum(!is.na(total_minutes_asleep)),
   ) %>% 
   mutate(segmentation_user, segment = 
-           ifelse(day_steps == 31 & day_sleep > median(day_sleep), "1. Golden user",
-                  ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2. Silver user",
-                         ifelse(day_steps > mean(day_steps), "3. Bronz user", "4. Other"))))
+           ifelse(day_steps == 31 & day_sleep > median(day_sleep), "1",
+                  ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2",
+                         ifelse(day_steps > mean(day_steps), "3", "4"))))
 
 segmentation_numbers_2 <- tibble(segmentation_user_2) %>% 
   group_by(segment) %>% 
@@ -294,9 +294,9 @@ segmentation_user_3 <- joined_table %>%
     day_sleep = sum(!is.na(total_minutes_asleep)),
   ) %>% 
   mutate(segmentation_user, segment = 
-           ifelse(day_steps == 31 & day_sleep == 31, "1. Golden user",
-                  ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "2. Silver user",
-                         ifelse(day_steps > mean(day_steps), "3. Bronz user", "4. Other"))))
+           ifelse(day_steps == 31 & day_sleep == 31, "1",
+                  ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "2",
+                         ifelse(day_steps > mean(day_steps), "3", "4"))))
 
 segmentation_numbers_3 <- tibble(segmentation_user_3) %>% 
   group_by(segment) %>% 
@@ -310,4 +310,30 @@ ggplot(segmentation_numbers_3) +
   labs(title = "Scenario 3", x = "User group", y = "# of users",
        caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
 ggsave("Plot_Segmentation_3.png", width = 5, height = 4)
+
+#Scenario 4
+segmentation_user_4 <- joined_table %>% 
+  group_by(id) %>% 
+  summarise(
+    day_steps = sum(!is.na(total_steps)),
+    day_sleep = sum(!is.na(total_minutes_asleep)),
+  ) %>% 
+  mutate(segmentation_user, segment = 
+           ifelse(day_steps == 31 & day_sleep == 31, "1",
+                  ifelse(day_steps > median(day_steps) & day_sleep > median(day_sleep), "2",
+                         ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "3",
+                                ifelse(day_steps > mean(day_steps), "4", "5")))))
+
+segmentation_numbers_4 <- tibble(segmentation_user_4) %>% 
+  group_by(segment) %>% 
+  summarise(number = n()) %>% 
+  arrange(segment)
+
+ggplot(segmentation_numbers_4) +
+  aes(x = segment, y = number, fill = number) +
+  geom_bar(stat = "identity") +
+  theme(legend.position = "none") +
+  labs(title = "Scenario 4", x = "User group", y = "# of users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+ggsave("Plot_Segmentation_4.png", width = 5, height = 4)
 
