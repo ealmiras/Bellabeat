@@ -255,7 +255,10 @@ segmentation_numbers <- tibble(segmentation_user) %>%
 
 ggplot(segmentation_numbers) +
   aes(x = segment, y = number, fill = number) +
-  geom_bar(stat = "identity")
+  geom_bar(stat = "identity") +
+  theme(legend.position = "none") +
+  labs(title = "Scenario 1", x = "User group", y = "# of users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
 ggsave("Plot_Segmentation.png", width = 5, height = 4)
 
 #Scenario 2
@@ -277,7 +280,10 @@ segmentation_numbers_2 <- tibble(segmentation_user_2) %>%
 
 ggplot(segmentation_numbers_2) +
   aes(x = segment, y = number, fill = number) +
-  geom_bar(stat = "identity")
+  geom_bar(stat = "identity") +
+  theme(legend.position = "none") +
+  labs(title = "Scenario 2", x = "User group", y = "# of users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
 ggsave("Plot_Segmentation_2.png", width = 5, height = 4)
 
 #Scenario 3
@@ -299,6 +305,9 @@ segmentation_numbers_3 <- tibble(segmentation_user_3) %>%
 
 ggplot(segmentation_numbers_3) +
   aes(x = segment, y = number, fill = number) +
-  geom_bar(stat = "identity")
+  geom_bar(stat = "identity") +
+  theme(legend.position = "none") +
+  labs(title = "Scenario 3", x = "User group", y = "# of users",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
 ggsave("Plot_Segmentation_3.png", width = 5, height = 4)
 
