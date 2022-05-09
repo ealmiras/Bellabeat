@@ -41,9 +41,18 @@ It can also be said that, the users main purpose to use the app is to track thei
 ### 3.3. User Segmentation
 Folowing the previous analysis, I wanted to look at the usage frequency and create a segmentation.
 
-For this purpose, I've selected tresholds for each function:
-- Golden users: Activity tracker (31 days), Sleep tracker (> median), Weight log (at least once)
-- Silver users: Activity tracker (> median), Sleep tracker (> mean)
-- Bronz users: Activity tracker (> mean)
-- Other
+For this purpose, I've studied a few different scenarios to find the best fit.
 
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_Segmentation.png" width="230" /> |
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_Segmentation_2.png" width="230" /> |
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_Segmentation_3.png" width="230" /> |
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_Segmentation_4.png" width="230" /> 
+
+The scenario I've choosed is the 4th one and the criteria are as follows:
+- 1: Activity tracker (31 days), Sleep tracker (31 days)
+- 2: Activity tracker (> median), Sleep tracker (> median)
+- 3: Activity tracker (> mean), Sleep tracker (> mean)
+- 4: Activity tracker (> mean)
+- 5: Other
+
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_User_Segmentation.png" width="450" /> 
