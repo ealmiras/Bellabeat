@@ -24,11 +24,26 @@ For the weekly data, we can say that it's more probable of the users to log thei
 ### 3.2. Cross Function Usage
 Next, I wanted to check the distribution of the user who use more than one function of the app.
 
-Firstly, it's important to mention that, all 33 users analysed have used activity tracker.
+Firstly, it's important to mention that, for this analysis, the different trackers have accepted as "used" even if the usage was only one day.
+
+Secondly, it's observed that, all 33 users analysed have used activity tracker.
 - 7 of those have used only the activity tracker
 - 18 have used the sleep tracker together with the activity tracker
 - 2 have used weight log together with the activity tracker
 - 6 have used all functions analysed (activity, sleep, weight log)
 
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_PercentageUsersCrossFunction.png" width="450" />
+
+From this analysis, we can interpret that, the user valuation of the functions is as follow: Activity tracker -> Sleep tracker -> Weight log
+
+It can also be said that, the users main purpose to use the app is to track their activities.
+
+### 3.3. User Segmentation
+Folowing the previous analysis, I wanted to look at the usage frequency and create a segmentation.
+
+For this purpose, I've selected tresholds for each function:
+- Golden users: Activity tracker (31 days), Sleep tracker (> median), Weight log (at least once)
+- Silver users: Activity tracker (> median), Sleep tracker (> mean)
+- Bronz users: Activity tracker (> mean)
+- Other
 
