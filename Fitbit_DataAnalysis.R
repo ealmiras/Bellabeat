@@ -236,4 +236,27 @@ ggsave("Plot_PercentageUsersCrossFunction.png", width = 5, height = 4)
 
 # Segmentation
 
+segmentation_user <- joined_table %>% 
+  group_by(id) %>% 
+  summarise(
+    day_steps = sum(!is.na(total_steps)),
+    day_sleep = sum(!is.na(total_minutes_asleep)),
+    day_weight = sum(!is.na(weight_kg))
+            ) %>% 
+    mutate(segmentation_user, segment = 
+         ifelse(day_steps == 31 & day_sleep > median(day_sleep) & day_weight > 0, "1. Golden user",
+                ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2. Silver user",
+                       ifelse(day_steps > mean(day_steps), "3. Bronz user", "4. Other"))))
+
+segmentation_numbers <- tibble(segmentation_user) %>% 
+  group_by(segment) %>% 
+  summarise(number = n()) %>% 
+  arrange(segment)
+
+ggplot(segmentation_numbers) +
+  aes(x = segment, y = number, fill = number) +
+  geom_bar(stat = "identity")
+ggsave("Plot_Segmentation.png", width = 5, height = 4)
+
+
 
