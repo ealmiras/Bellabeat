@@ -288,7 +288,7 @@ segmentation_user_3 <- joined_table %>%
     day_sleep = sum(!is.na(total_minutes_asleep)),
   ) %>% 
   mutate(segmentation_user, segment = 
-           ifelse(day_steps == 31 & day_sleep > median(day_sleep), "1. Golden user",
+           ifelse(day_steps == 31 & day_sleep == 31, "1. Golden user",
                   ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "2. Silver user",
                          ifelse(day_steps > mean(day_steps), "3. Bronz user", "4. Other"))))
 
@@ -301,3 +301,4 @@ ggplot(segmentation_numbers_3) +
   aes(x = segment, y = number, fill = number) +
   geom_bar(stat = "identity")
 ggsave("Plot_Segmentation_3.png", width = 5, height = 4)
+
