@@ -97,18 +97,21 @@ d_act_tracker_usage <- daily_activity %>%
   summarise(n = n()) %>% 
   arrange(by = n)
 
+cp <- c("#355070","#6D597A","#B56576","#E56B6F","#EAAC8B")
+
 ggplot(d_act_tracker_usage) + 
   aes(x=n) +
-  geom_histogram(binwidth = 1) +
-  geom_vline(xintercept = median(d_act_tracker_usage$n), color="#D8315B") +
-  geom_vline(xintercept = mean(d_act_tracker_usage$n), color="#DF9B6D") +
-  geom_label(aes(x=median(n)-3, y=15, label = "median"), color="#D8315B") +
-  geom_label(aes(x=median(n)-2, y=14, label = median(n)), color="#D8315B") +
-  geom_label(aes(x=mean(n)-2.5, y=10, label = "mean"), color="#DF9B6D") +
-  geom_label(aes(x=mean(n)-2, y=9, label = round(mean(n))), color="#DF9B6D") +
+  geom_histogram(binwidth = 1, color = "white") +
+  geom_vline(xintercept = median(d_act_tracker_usage$n), color=cp[[1]]) +
+  geom_vline(xintercept = mean(d_act_tracker_usage$n), color=cp[[4]]) +
+  geom_label(aes(x=median(n)-3, y=12, label = "median"), size = 5, color=cp[[1]]) +
+  geom_label(aes(x=median(n)-2, y=11, label = median(n)), size = 5, color=cp[[1]]) +
+  geom_label(aes(x=mean(n)-2.5, y=10, label = "mean"), size = 5, color=cp[[4]]) +
+  geom_label(aes(x=mean(n)-2, y=9, label = round(mean(n))), size = 5, color=cp[[4]]) +
   labs(title = "Activity Tracker Usage by User", 
        x = "# of days", y = "# of Users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  theme_minimal()
 ggsave("Plot_ActivityTrackerUsage.png", width = 5, height = 4)
 
 # User engagement of sleep tracker
@@ -119,16 +122,17 @@ d_sleep_tracker_usage <- sleep_activity %>%
 
 ggplot(d_sleep_tracker_usage) + 
   aes(x=n) +
-  geom_histogram(binwidth = 1) +
-  geom_vline(xintercept = median(d_sleep_tracker_usage$n), color="#D8315B") +
-  geom_vline(xintercept = mean(d_sleep_tracker_usage$n), color="#DF9B6D") +
-  geom_label(aes(x=median(n)-3, y=2.9, label = "median"), color="#D8315B") +
-  geom_label(aes(x=median(n)-2.4, y=2.7, label = median(n)), color="#D8315B") +
-  geom_label(aes(x=mean(n)-2.5, y=2.4, label = "mean"), color="#DF9B6D") +
-  geom_label(aes(x=mean(n)-2, y=2.2, label = round(mean(n))), color="#DF9B6D") +
+  geom_histogram(binwidth = 1, color = "white") +
+  geom_vline(xintercept = median(d_sleep_tracker_usage$n), color=cp[[1]]) +
+  geom_vline(xintercept = mean(d_sleep_tracker_usage$n), color=cp[[4]]) +
+  geom_label(aes(x=median(n)+3, y=2.6, label = "median"), size = 5, color=cp[[1]]) +
+  geom_label(aes(x=median(n)+3, y=2.35, label = median(n)), size = 5, color=cp[[1]]) +
+  geom_label(aes(x=mean(n)-2.5, y=2.5, label = "mean"), size = 5, color=cp[[4]]) +
+  geom_label(aes(x=mean(n)-2, y=2.25, label = round(mean(n))), size = 5, color=cp[[4]]) +
   labs(title = "Sleep Tracker Usage by User", 
        x = "# of days", y = "# of Users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  theme_minimal()
 ggsave("Plot_SleepTrackerUsage.png", width = 5, height = 4)
 
 # User engagement of weight tracker
@@ -153,10 +157,11 @@ m_weight_tracker_usage <- weight_log %>%
   summarise(n=n())
 ggplot(m_weight_tracker_usage) +
   aes(x=day_month, y=n) +
-  geom_col() +
+  geom_col(fill = cp[[1]]) +
   labs(title = "Weight Tracker Usage by Day_Month", 
        x = "Day", y = "# of Users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  theme_minimal()
 ggsave("Plot_WeightTrackerUsage_byDayMonth.png", width = 5, height = 4)
 
 w_weight_tracker_usage <- weight_log %>% 
@@ -165,11 +170,12 @@ w_weight_tracker_usage <- weight_log %>%
   arrange(day_week)
 ggplot(w_weight_tracker_usage) + 
   aes(x=day_week, y=n) + 
-  geom_col() +
+  geom_col(fill = cp[[1]]) +
   labs(title = "Weight Tracker Usage by Day_Week", 
        subtitle = "1:Monday - 7:Sunday",
        x = "Day", y = "# of Users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")+
+  theme_minimal()
 ggsave("Plot_WeightTrackerUsage_byDayWeek.png", width = 5, height = 4)
 
 # Cross function usage
@@ -231,7 +237,8 @@ ggplot(df) +
   geom_text(aes(y = count/2 + c(0, cumsum(count)[-length(count)]), 
                 label = percentage), size=6, color="white") +
   labs(title ="Percentage of Users - Cross Function Usage",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  scale_fill_manual(values = cp) 
 ggsave("Plot_PercentageUsersCrossFunction.png", width = 5, height = 4)
 
 # Segmentation
@@ -252,11 +259,15 @@ segmentation_numbers <- tibble(segmentation_user) %>%
   summarise(number = n()) %>% 
   arrange(segment)
 ggplot(segmentation_numbers) +
-  aes(x = segment, y = number, fill = number) +
+  aes(x = segment, y = number, fill = segment) +
   geom_bar(stat = "identity") +
+  theme_minimal() +
   theme(legend.position = "none") +
   labs(title = "Scenario 1", x = "User group", y = "# of users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  scale_fill_manual(values = c(cp[1:4])) +
+  geom_text(aes(y = number/2, label = number), 
+            color = "white", size = 5)
 ggsave("Plot_Segmentation.png", width = 5, height = 4)
 
 #Scenario 2
@@ -275,11 +286,15 @@ segmentation_numbers_2 <- tibble(segmentation_user_2) %>%
   summarise(number = n()) %>% 
   arrange(segment)
 ggplot(segmentation_numbers_2) +
-  aes(x = segment, y = number, fill = number) +
+  aes(x = segment, y = number, fill = segment) +
   geom_bar(stat = "identity") +
+  theme_minimal() +
   theme(legend.position = "none") +
   labs(title = "Scenario 2", x = "User group", y = "# of users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  scale_fill_manual(values = c(cp[1:4])) +
+  geom_text(aes(y = number/2, label = number), 
+            color = "white", size = 5)
 ggsave("Plot_Segmentation_2.png", width = 5, height = 4)
 
 #Scenario 3
@@ -298,11 +313,15 @@ segmentation_numbers_3 <- tibble(segmentation_user_3) %>%
   summarise(number = n()) %>% 
   arrange(segment)
 ggplot(segmentation_numbers_3) +
-  aes(x = segment, y = number, fill = number) +
+  aes(x = segment, y = number, fill = segment) +
   geom_bar(stat = "identity") +
+  theme_minimal() +
   theme(legend.position = "none") +
   labs(title = "Scenario 3", x = "User group", y = "# of users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  scale_fill_manual(values = c(cp[1:4])) +
+  geom_text(aes(y = number/2, label = number), 
+            color = "white", size = 5)
 ggsave("Plot_Segmentation_3.png", width = 5, height = 4)
 
 #Scenario 4
@@ -323,11 +342,15 @@ segmentation_numbers_4 <- tibble(segmentation_user_4) %>%
   arrange(segment) %>% 
   mutate(percentage = percent(number/sum(number), accuracy = 1))
 ggplot(segmentation_numbers_4) +
-  aes(x = segment, y = number, fill = number) +
+  aes(x = segment, y = number, fill = segment) +
   geom_bar(stat = "identity") +
+  theme_minimal() +
   theme(legend.position = "none") +
   labs(title = "Scenario 4", x = "User group", y = "# of users",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  scale_fill_manual(values = c(cp[1:5])) +
+  geom_text(aes(y = number/2, label = number), 
+            color = "white", size = 5)
 ggsave("Plot_Segmentation_4.png", width = 5, height = 4)
 
 df <- segmentation_numbers_4 %>% 
@@ -338,6 +361,8 @@ ggplot(df) +
   labs(title = "User Segmentation", y = "# of users", x = "",
        caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
   geom_text(aes(y = number/2 + c(0, cumsum(number)[-length(number)]), label = percentage), 
-            color = "white", size = 5)
+            color = "white", size = 5) +
+  scale_fill_manual(values = c(cp[1:5])) +
+  theme_minimal()
 ggsave("Plot_User_Segmentation.png", width = 5, height = 4)
 
