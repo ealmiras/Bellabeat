@@ -247,12 +247,10 @@ segmentation_user <- joined_table %>%
          ifelse(day_steps == 31 & day_sleep > median(day_sleep) & day_weight > 0, "1",
                 ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2",
                        ifelse(day_steps > mean(day_steps), "3", "4"))))
-
 segmentation_numbers <- tibble(segmentation_user) %>% 
   group_by(segment) %>% 
   summarise(number = n()) %>% 
   arrange(segment)
-
 ggplot(segmentation_numbers) +
   aes(x = segment, y = number, fill = number) +
   geom_bar(stat = "identity") +
@@ -272,12 +270,10 @@ segmentation_user_2 <- joined_table %>%
            ifelse(day_steps == 31 & day_sleep > median(day_sleep), "1",
                   ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2",
                          ifelse(day_steps > mean(day_steps), "3", "4"))))
-
 segmentation_numbers_2 <- tibble(segmentation_user_2) %>% 
   group_by(segment) %>% 
   summarise(number = n()) %>% 
   arrange(segment)
-
 ggplot(segmentation_numbers_2) +
   aes(x = segment, y = number, fill = number) +
   geom_bar(stat = "identity") +
@@ -297,12 +293,10 @@ segmentation_user_3 <- joined_table %>%
            ifelse(day_steps == 31 & day_sleep == 31, "1",
                   ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "2",
                          ifelse(day_steps > mean(day_steps), "3", "4"))))
-
 segmentation_numbers_3 <- tibble(segmentation_user_3) %>% 
   group_by(segment) %>% 
   summarise(number = n()) %>% 
   arrange(segment)
-
 ggplot(segmentation_numbers_3) +
   aes(x = segment, y = number, fill = number) +
   geom_bar(stat = "identity") +
@@ -323,12 +317,11 @@ segmentation_user_4 <- joined_table %>%
                   ifelse(day_steps > median(day_steps) & day_sleep > median(day_sleep), "2",
                          ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "3",
                                 ifelse(day_steps > mean(day_steps), "4", "5")))))
-
 segmentation_numbers_4 <- tibble(segmentation_user_4) %>% 
   group_by(segment) %>% 
   summarise(number = n()) %>% 
-  arrange(segment)
-
+  arrange(segment) %>% 
+  mutate(percentage = percent(number/sum(number), accuracy = 1))
 ggplot(segmentation_numbers_4) +
   aes(x = segment, y = number, fill = number) +
   geom_bar(stat = "identity") +
@@ -336,4 +329,15 @@ ggplot(segmentation_numbers_4) +
   labs(title = "Scenario 4", x = "User group", y = "# of users",
        caption = "Data Source: FitBit Fitness Tracker Data, Möbius")
 ggsave("Plot_Segmentation_4.png", width = 5, height = 4)
+
+df <- segmentation_numbers_4 %>% 
+  arrange(desc(number)) 
+ggplot(df) +
+  aes(x = "", y = number, fill = segment) +
+  geom_bar(stat = "identity") +
+  labs(title = "User Segmentation", y = "# of users", x = "",
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+  geom_text(aes(y = number/2 + c(0, cumsum(number)[-length(number)]), label = percentage), 
+            color = "white", size = 5)
+ggsave("Plot_User_Segmentation.png", width = 5, height = 4)
 
