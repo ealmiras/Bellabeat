@@ -101,11 +101,11 @@ cp <- c("#355070","#6D597A","#B56576","#E56B6F","#EAAC8B")
 
 ggplot(d_act_tracker_usage) + 
   aes(x=n) +
-  geom_histogram(binwidth = 1, color = "white") +
-  geom_vline(xintercept = median(d_act_tracker_usage$n), color=cp[[1]]) +
+  geom_histogram(binwidth = 1, color = "white", fill = cp[[1]]) +
+  geom_vline(xintercept = median(d_act_tracker_usage$n), color=cp[[3]]) +
   geom_vline(xintercept = mean(d_act_tracker_usage$n), color=cp[[4]]) +
-  geom_label(aes(x=median(n)-3, y=12, label = "median"), size = 5, color=cp[[1]]) +
-  geom_label(aes(x=median(n)-2, y=11, label = median(n)), size = 5, color=cp[[1]]) +
+  geom_label(aes(x=median(n)-3, y=12, label = "median"), size = 5, color=cp[[3]]) +
+  geom_label(aes(x=median(n)-2, y=11, label = median(n)), size = 5, color=cp[[3]]) +
   geom_label(aes(x=mean(n)-2.5, y=10, label = "mean"), size = 5, color=cp[[4]]) +
   geom_label(aes(x=mean(n)-2, y=9, label = round(mean(n))), size = 5, color=cp[[4]]) +
   labs(title = "Activity Tracker Usage by User", 
@@ -122,11 +122,11 @@ d_sleep_tracker_usage <- sleep_activity %>%
 
 ggplot(d_sleep_tracker_usage) + 
   aes(x=n) +
-  geom_histogram(binwidth = 1, color = "white") +
-  geom_vline(xintercept = median(d_sleep_tracker_usage$n), color=cp[[1]]) +
+  geom_histogram(binwidth = 1, color = "white", fill = cp[[1]]) +
+  geom_vline(xintercept = median(d_sleep_tracker_usage$n), color=cp[[3]]) +
   geom_vline(xintercept = mean(d_sleep_tracker_usage$n), color=cp[[4]]) +
-  geom_label(aes(x=median(n)+3, y=2.6, label = "median"), size = 5, color=cp[[1]]) +
-  geom_label(aes(x=median(n)+3, y=2.35, label = median(n)), size = 5, color=cp[[1]]) +
+  geom_label(aes(x=median(n)+3, y=2.6, label = "median"), size = 5, color=cp[[3]]) +
+  geom_label(aes(x=median(n)+3, y=2.35, label = median(n)), size = 5, color=cp[[3]]) +
   geom_label(aes(x=mean(n)-2.5, y=2.5, label = "mean"), size = 5, color=cp[[4]]) +
   geom_label(aes(x=mean(n)-2, y=2.25, label = round(mean(n))), size = 5, color=cp[[4]]) +
   labs(title = "Sleep Tracker Usage by User", 
