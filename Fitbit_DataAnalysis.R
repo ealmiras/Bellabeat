@@ -242,7 +242,6 @@ ggplot(df) +
 ggsave("Plot_PercentageUsersCrossFunction.png", width = 5, height = 4)
 
 # Segmentation
-#Scenario 1
 segmentation_user <- joined_table %>% 
   group_by(id) %>% 
   summarise(
@@ -250,16 +249,32 @@ segmentation_user <- joined_table %>%
     day_sleep = sum(!is.na(total_minutes_asleep)),
     day_weight = sum(!is.na(weight_kg))
             ) %>% 
-    mutate(segmentation_user, segment = 
+    mutate(
+      segmentation_user, segment_sc1 = 
          ifelse(day_steps == 31 & day_sleep > median(day_sleep) & day_weight > 0, "1",
                 ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2",
-                       ifelse(day_steps > mean(day_steps), "3", "4"))))
-segmentation_numbers <- tibble(segmentation_user) %>% 
-  group_by(segment) %>% 
+                       ifelse(day_steps > mean(day_steps), "3", "4"))),
+      segmentation_user, segment_sc2 = 
+         ifelse(day_steps == 31 & day_sleep > median(day_sleep), "1",
+              ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2",
+                       ifelse(day_steps > mean(day_steps), "3", "4"))),
+     segmentation_user, segment_sc3 = 
+         ifelse(day_steps == 31 & day_sleep == 31, "1",
+               ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "2",
+                       ifelse(day_steps > mean(day_steps), "3", "4"))),
+     segmentation_user, segment_sc4 = 
+         ifelse(day_steps == 31 & day_sleep == 31, "1",
+                ifelse(day_steps > median(day_steps) & day_sleep > median(day_sleep), "2",
+                       ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "3",
+                               ifelse(day_steps > mean(day_steps), "4", "5")))))
+
+# Scenario 1
+segmentation_numbers_1 <- tibble(segmentation_user) %>% 
+  group_by(segment_sc1) %>% 
   summarise(number = n()) %>% 
-  arrange(segment)
+  arrange(segment_sc1)
 ggplot(segmentation_numbers) +
-  aes(x = segment, y = number, fill = segment) +
+  aes(x = segment_sc1, y = number, fill = segment_sc1) +
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(legend.position = "none") +
@@ -271,22 +286,12 @@ ggplot(segmentation_numbers) +
 ggsave("Plot_Segmentation.png", width = 5, height = 4)
 
 #Scenario 2
-segmentation_user_2 <- joined_table %>% 
-  group_by(id) %>% 
-  summarise(
-    day_steps = sum(!is.na(total_steps)),
-    day_sleep = sum(!is.na(total_minutes_asleep)),
-  ) %>% 
-  mutate(segmentation_user, segment = 
-           ifelse(day_steps == 31 & day_sleep > median(day_sleep), "1",
-                  ifelse(day_steps > median(day_steps) & day_sleep > mean(day_sleep), "2",
-                         ifelse(day_steps > mean(day_steps), "3", "4"))))
-segmentation_numbers_2 <- tibble(segmentation_user_2) %>% 
-  group_by(segment) %>% 
+segmentation_numbers_2 <- tibble(segmentation_user) %>% 
+  group_by(segment_sc2) %>% 
   summarise(number = n()) %>% 
-  arrange(segment)
+  arrange(segment_sc2)
 ggplot(segmentation_numbers_2) +
-  aes(x = segment, y = number, fill = segment) +
+  aes(x = segment_sc2, y = number, fill = segment_sc2) +
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(legend.position = "none") +
@@ -298,22 +303,12 @@ ggplot(segmentation_numbers_2) +
 ggsave("Plot_Segmentation_2.png", width = 5, height = 4)
 
 #Scenario 3
-segmentation_user_3 <- joined_table %>% 
-  group_by(id) %>% 
-  summarise(
-    day_steps = sum(!is.na(total_steps)),
-    day_sleep = sum(!is.na(total_minutes_asleep)),
-  ) %>% 
-  mutate(segmentation_user, segment = 
-           ifelse(day_steps == 31 & day_sleep == 31, "1",
-                  ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "2",
-                         ifelse(day_steps > mean(day_steps), "3", "4"))))
-segmentation_numbers_3 <- tibble(segmentation_user_3) %>% 
-  group_by(segment) %>% 
+segmentation_numbers_3 <- tibble(segmentation_user) %>% 
+  group_by(segment_sc3) %>% 
   summarise(number = n()) %>% 
-  arrange(segment)
+  arrange(segment_sc3)
 ggplot(segmentation_numbers_3) +
-  aes(x = segment, y = number, fill = segment) +
+  aes(x = segment_sc3, y = number, fill = segment_sc3) +
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(legend.position = "none") +
@@ -325,24 +320,13 @@ ggplot(segmentation_numbers_3) +
 ggsave("Plot_Segmentation_3.png", width = 5, height = 4)
 
 #Scenario 4
-segmentation_user_4 <- joined_table %>% 
-  group_by(id) %>% 
-  summarise(
-    day_steps = sum(!is.na(total_steps)),
-    day_sleep = sum(!is.na(total_minutes_asleep)),
-  ) %>% 
-  mutate(segmentation_user, segment = 
-           ifelse(day_steps == 31 & day_sleep == 31, "1",
-                  ifelse(day_steps > median(day_steps) & day_sleep > median(day_sleep), "2",
-                         ifelse(day_steps > mean(day_steps) & day_sleep > mean(day_sleep), "3",
-                                ifelse(day_steps > mean(day_steps), "4", "5")))))
-segmentation_numbers_4 <- tibble(segmentation_user_4) %>% 
-  group_by(segment) %>% 
+segmentation_numbers_4 <- tibble(segmentation_user) %>% 
+  group_by(segment_sc4) %>% 
   summarise(number = n()) %>% 
-  arrange(segment) %>% 
+  arrange(segment_sc4) %>% 
   mutate(percentage = percent(number/sum(number), accuracy = 1))
 ggplot(segmentation_numbers_4) +
-  aes(x = segment, y = number, fill = segment) +
+  aes(x = segment_sc4, y = number, fill = segment_sc4) +
   geom_bar(stat = "identity") +
   theme_minimal() +
   theme(legend.position = "none") +
@@ -356,13 +340,15 @@ ggsave("Plot_Segmentation_4.png", width = 5, height = 4)
 df <- segmentation_numbers_4 %>% 
   arrange(desc(number)) 
 ggplot(df) +
-  aes(x = "", y = number, fill = segment) +
+  aes(x = "", y = number, fill = segment_sc4) +
   geom_bar(stat = "identity") +
   labs(title = "User Segmentation", y = "# of users", x = "",
-       caption = "Data Source: FitBit Fitness Tracker Data, Möbius") +
+       caption = "Data Source: FitBit Fitness Tracker Data, Möbius", fill = "User groups") +
   geom_text(aes(y = number/2 + c(0, cumsum(number)[-length(number)]), label = percentage), 
             color = "white", size = 5) +
   scale_fill_manual(values = c(cp[1:5])) +
   theme_minimal()
-ggsave("Plot_User_Segmentation.png", width = 5, height = 4)
+ggsave("Plot_UserSegmentation.png", width = 5, height = 4)
+
+# App Usage Time Distribution
 
