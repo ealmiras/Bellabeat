@@ -1,6 +1,6 @@
-## 3. Data Analysis
+## 4. Data Analysis
 
-### 3.1. User Engagement
+### 4.1. User Engagement
 To begin with, I decided to first analyse the user engagement.
 I used histogram charts to and median values.
 
@@ -21,7 +21,7 @@ For the weekly data, we can say that it's more probable of the users to log thei
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayMonth.png" width="450" /> |
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayWeek.png" width="450" />
 
-### 3.2. Cross Function Usage
+### 4.2. Cross Function Usage
 Next, I wanted to check the distribution of the user who use more than one function of the app.
 
 Firstly, it's important to mention that, for this analysis, the different trackers have accepted as "used" even if the usage was only one day.
@@ -38,7 +38,7 @@ From this analysis, we can interpret that, the user valuation of the functions i
 
 It can also be said that, the users main purpose to use the app is to track their activities.
 
-### 3.3. User Segmentation
+### 4.3. User Segmentation
 Folowing the previous analysis, I wanted to look at the usage frequency and create a segmentation.
 
 For this purpose, I've studied a few different scenarios to find the best fit.
