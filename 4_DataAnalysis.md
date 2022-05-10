@@ -21,6 +21,11 @@ For the weekly data, we can say that it's more probable of the users to log thei
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayMonth.png" width="450" /> |
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayWeek.png" width="450" />
 
+#### Fundings
+- User engagement is the highest for the activity tracker and has a very high median for days used
+- Sleep tracker follows the activity tracker, also has a high median for days used
+- Even though it is hard to comment on the user engagement for the weight log, it can be said that there's a pattern about which day of the week users log data in general
+
 ### 4.2. Cross Function Usage
 Next, I wanted to check the distribution of the user who use more than one function of the app.
 
@@ -32,11 +37,12 @@ Secondly, it's observed that, all 33 users analysed have used activity tracker.
 - 2 have used weight log together with the activity tracker
 - 6 have used all functions analysed (activity, sleep, weight log)
 
-<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_PercentageUsersCrossFunction.png" width="450" />
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_PercentageUsersCrossFunction.png" width="450" /> 
 
-From this analysis, we can interpret that, the user valuation of the functions is as follow: Activity tracker -> Sleep tracker -> Weight log
-
-It can also be said that, the users main purpose to use the app is to track their activities.
+#### Fundings
+- Users generally use the activity tracker and the sleep tracker together
+- The user valuation of the functions may be ordered as Activity tracker -> Sleep tracker -> Weight log
+- Meaning that, users primarily uses the app for the activity tracker, then some of those adds the sleep tracker to their app journey, finally some of those who are using these both functions adds the weight log to their journey
 
 ### 4.3. User Segmentation
 Folowing the previous analysis, I wanted to look at the usage frequency and create a segmentation.
@@ -55,4 +61,12 @@ The scenario I've choosed is the 4th one and the criteria are as follows:
 - 4: Activity tracker (> mean)
 - 5: Other
 
-<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_User_Segmentation.png" width="450" /> 
+<img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_UserSegmentation.png" width="450" /> 
+
+#### Fundings
+- 36% of the users are considered in the "Other" group, that are using both the activity tracker and the sleep tracker below the average number of days, which can be considered normal
+- However when identified separately, 63% of the users are below the average number of days for the sleep tracker.
+
+**This result shows that there is an availability to improve the use frequency of the Sleep Tracker**
+
+
