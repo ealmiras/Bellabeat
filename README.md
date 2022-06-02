@@ -11,6 +11,8 @@ You can find the sections of the project below together with the R code used:
 
 [4_DataAnalysis](4_DataAnalysis.md)
 
+[5_Suggestions](5_Suggestions.md)
+
 ----
 
 [Fitbit_DataAnalysis](Fitbit_DataAnalysis.R)
