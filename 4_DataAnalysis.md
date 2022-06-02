@@ -21,7 +21,7 @@ For the weekly data, we can say that it's more probable of the users to log thei
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayMonth.png" width="450" /> |
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_WeightTrackerUsage_byDayWeek.png" width="450" />
 
-#### Fundings
+#### Foundings
 - User engagement is the highest for the activity tracker and has a very high median for days used
 - Sleep tracker follows the activity tracker, also has a high median for days used
 - Even though it is hard to comment on the user engagement for the weight log, it can be said that there's a pattern about which day of the week users log data in general
@@ -39,7 +39,7 @@ Secondly, it's observed that, all 33 users analysed have used activity tracker.
 
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_PercentageUsersCrossFunction.png" width="450" /> 
 
-#### Fundings
+#### Foundings
 - Users generally use the activity tracker and the sleep tracker together
 - The user valuation of the functions may be ordered as Activity tracker -> Sleep tracker -> Weight log
 - Meaning that, users primarily uses the app for the activity tracker, then some of those adds the sleep tracker to their app journey, finally some of those who are using these both functions adds the weight log to their journey
@@ -63,7 +63,7 @@ The scenario I've choosed is the 4th one and the criteria are as follows:
 
 <img src="https://github.com/ealmiras/Bellabeat/blob/main/Plot_UserSegmentation.png" width="450" /> 
 
-#### Fundings
+#### Foundings
 - 36% of the users are considered in the "Other" group, that are using both the activity tracker and the sleep tracker below the average number of days, which can be considered normal
 - However when identified separately, 63% of the users are below the average number of days for the sleep tracker.
 
